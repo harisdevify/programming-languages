@@ -6,3 +6,4 @@ HELLOName        Department     Salary
 5    Ayesha      Marketing      48000
 6    Bilal       Sales          52000
 7    Haris.      Buy            100000
+

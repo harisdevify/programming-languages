@@ -2,7 +2,6 @@
 #include <unistd.h>
 #include <vector>
 #include <string>
-
 using namespace std;
 
 const int WIDTH = 30;
@@ -14,22 +13,24 @@ struct Point{
 
 enum Direction {UP, DOWN, LEFT, RIGHT};
 
+void drawGrid(Point snakeHead){
+  vector<string> grid(HEIGHT, string(WIDTH, ' '));
 
-void darwGrid(Point snakeHead){
-   vector<string> grid(HEIGHT, string(WIDTH, ' '));
-   for(int x=0; x < WIDTH; x++){
-      grid[0][x] = '#';
-      grid[HEIGHT - 1][x] = '#';
-   }
-   for(int y=0; y < HEIGHT; y++){
-      grid[y][0] = '#';
-      grid[y][WIDTH - 1] = '#';
-   }
+  for(int x=0; x<WIDTH; x++){
+   grid[0][x] = '#';
+   grid[HEIGHT -1][x] = '#';
+  }
+  for(int y=0; y<HEIGHT; y++){
+   grid[y][0] = '#';
+   grid[y][WIDTH -1] = '#';
+  }
 
-   grid[snakeHead.y][snakeHead.x]= '0';
-   cout << "\033[H\033[J";
-   for (auto &row : grid)
-    cout << row << "\n";
+
+   grid[snakeHead.y][snakeHead.x] = '0';
+   cout << "\x1B[2J\x1B[H";
+   for(auto row : grid){
+       cout<< row <<endl;
+   }
 }
 
 
@@ -38,7 +39,7 @@ int main(){
 
    Point snakeHead = {WIDTH / 2, HEIGHT / 2};
 
-   Direction dir = UP;
+   Direction dir = RIGHT;
    bool gameOver = false;
 
 
@@ -61,9 +62,7 @@ int main(){
          break;
       }
 
-      cout << "snake head at: (" << snakeHead.x << ", " << snakeHead.y << ")"<< endl;
-
-      darwGrid(snakeHead);
+      drawGrid(snakeHead);
       usleep(500000);
    }
    cout<<" Start again!"<<endl;
